@@ -1,6 +1,5 @@
-
-import { ChaffResponse, Generator } from "../types/index";
-import { PRNG, simpleHash } from "../utils/prng-utils";
+import { ChaffResponse, Generator } from '../types/index';
+import { PRNG, simpleHash } from '../utils/prng-utils';
 
 const generateWpConfigContent = (prng: PRNG): string => {
   const dbName = `wp_${prng.nextString(8)}`;
@@ -17,16 +16,18 @@ const generateWpConfigContent = (prng: PRNG): string => {
     `SECURE_AUTH_SALT`,
     `LOGGED_IN_SALT`,
     `NONCE_SALT`,
-  ].map(key => `define( '${key}',         '${prng.nextString(64)}' );`).join('\n');
+  ]
+    .map((key) => `define( '${key}',         '${prng.nextString(64)}' );`)
+    .join('\n');
 
   const tablePrefix = `wp_${prng.nextString(3)}_`;
 
-    const wpDebug = prng.next() > 0.5 ? 'true' : 'false';
-    const wpDebugLog = prng.next() > 0.5 ? 'true' : 'false';
-    const wpDebugDisplay = prng.next() > 0.5 ? 'true' : 'false';
-    const displayErrors = prng.next() > 0.5 ? '1' : '0';
-  
-    return `<?php
+  const wpDebug = prng.next() > 0.5 ? 'true' : 'false';
+  const wpDebugLog = prng.next() > 0.5 ? 'true' : 'false';
+  const wpDebugDisplay = prng.next() > 0.5 ? 'true' : 'false';
+  const displayErrors = prng.next() > 0.5 ? '1' : '0';
+
+  return `<?php
   /**
    * The base configuration for WordPress
    */
@@ -67,7 +68,8 @@ const generateWpConfigContent = (prng: PRNG): string => {
   
   /** Sets up WordPress vars and included files. */
   require_once ABSPATH . 'wp-settings.php';
-  `;};
+  `;
+};
 
 const wpConfigGenerator: Generator = {
   pattern: /(^|\/)wp-config\.php$/,
@@ -75,7 +77,7 @@ const wpConfigGenerator: Generator = {
     const seed = simpleHash(path);
     const prng = new PRNG(seed);
     const wpConfigContent = generateWpConfigContent(prng);
-    return { content: wpConfigContent, type: 'text' };
+    return { content: wpConfigContent, type: 'text/plain' };
   },
 };
 

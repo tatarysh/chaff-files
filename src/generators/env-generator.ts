@@ -1,6 +1,5 @@
-
-import { ChaffResponse, Generator } from "../types/index";
-import { PRNG, simpleHash } from "../utils/prng-utils";
+import { ChaffResponse, Generator } from '../types/index';
+import { PRNG, simpleHash } from '../utils/prng-utils';
 
 const generateEnvContent = (prng: PRNG): string => {
   const sections = {
@@ -41,7 +40,8 @@ GOOGLE_CLIENT_SECRET=GOCSPX-${prng.nextString(24)}
 
   const part1 = prng.nextString(prng.nextInt(3, 6));
   const part2 = prng.nextString(prng.nextInt(4, 8));
-  const appName = part1.charAt(0).toUpperCase() + part1.slice(1) + part2.charAt(0).toUpperCase() + part2.slice(1);
+  const appName =
+    part1.charAt(0).toUpperCase() + part1.slice(1) + part2.charAt(0).toUpperCase() + part2.slice(1);
 
   let content = `APP_NAME=${appName}
 APP_ENV=production
@@ -52,7 +52,8 @@ APP_DEBUG=false
   const sectionKeys = Object.keys(sections) as (keyof typeof sections)[];
   // Randomly include sections
   for (const key of sectionKeys) {
-    if (prng.next() > 0.5) { // 50% chance to include each section
+    if (prng.next() > 0.5) {
+      // 50% chance to include each section
       content += sections[key]();
     }
   }
@@ -66,7 +67,7 @@ const envGenerator: Generator = {
     const seed = simpleHash(path);
     const prng = new PRNG(seed);
     const envContent = generateEnvContent(prng);
-    return { content: envContent, type: 'text' };
+    return { content: envContent, type: 'text/plain' };
   },
 };
 

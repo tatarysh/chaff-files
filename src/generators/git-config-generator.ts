@@ -1,6 +1,5 @@
-
-import { ChaffResponse, Generator } from "../types/index";
-import { PRNG, simpleHash } from "../utils/prng-utils";
+import { ChaffResponse, Generator } from '../types/index';
+import { PRNG, simpleHash } from '../utils/prng-utils';
 
 const gitConfigGenerator: Generator = {
   pattern: /(^|\/)\.git\/config$/,
@@ -32,7 +31,7 @@ const gitConfigGenerator: Generator = {
 	email = ${userEmail}
 `;
 
-    return { content, type: 'text' };
+    return { content, type: 'text/plain' };
   },
 };
 

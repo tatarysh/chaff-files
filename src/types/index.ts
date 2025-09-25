@@ -1,7 +1,6 @@
-
 export interface ChaffResponse {
   content: string;
-  type: 'html' | 'text';
+  type: 'html' | 'text' | 'text/plain';
 }
 
 export interface Generator {
