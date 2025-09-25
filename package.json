@@ -9,8 +9,9 @@
   ],
   "scripts": {
     "dev": "ts-node-dev --respawn src/server/dev-server.ts",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && tsc --emitDeclarationOnly && esbuild src/index.ts --bundle --minify --sourcemap --platform=node --format=cjs --outfile=dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "keywords": [
     "chaff",
@@ -20,10 +21,24 @@
   "author": "rysh",
   "license": "ISC",
   "type": "commonjs",
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
+    "esbuild": "^0.25.10",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
     "express": "^5.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.0",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
