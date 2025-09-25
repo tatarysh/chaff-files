@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+dist/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDEs and other
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+thumbs.db
