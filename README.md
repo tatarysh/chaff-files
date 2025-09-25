@@ -35,7 +35,7 @@ const port = 3000;
 
 app.use((req, res) => {
   const chaffResponse = generateChaffResponse(req.path);
-  res.status(403).type(chaffResponse.type).send(chaffResponse.content);
+  res.status(200).type(chaffResponse.type).send(chaffResponse.content);
 });
 
 app.listen(port, () => {
@@ -56,6 +56,9 @@ The package comes with several built-in generators for common sensitive files:
 -   **`wp-config.php` files**: Matches paths like `/wp-config.php`, `/blog/wp-config.php`.
     *   Generates fake WordPress configuration, including database credentials, authentication keys, and debugging settings.
     *   Boolean settings like `WP_DEBUG` are pseudo-randomly set but deterministic per path.
+-   **`~/.ssh/id_rsa` files**: Matches paths like `/.ssh/id_rsa`, `/home/user/.ssh/id_rsa`.
+    *   Generates fake SSH private keys, including dynamic key content, email, and date.
+    *   Values are pseudo-randomly generated but deterministic per path.
 
 ## Development
 
