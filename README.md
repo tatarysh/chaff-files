@@ -20,6 +20,12 @@ npm install @rysh/chaff-files
 yarn add @rysh/chaff-files
 ```
 
+## Build Process
+
+This package is built to provide both CommonJS (.cjs) and ES Module (.mjs) outputs, ensuring compatibility across different Node.js environments and bundlers. The `exports` field in `package.json` handles conditional loading, allowing your project to automatically use the appropriate module format.
+
+
+
 ## Usage
 
 ### In a Node.js Express Server
@@ -83,6 +89,8 @@ To run the development server and test the generators:
     *   `http://localhost:3000/blog/wp-config.php`
 
 ## Extending with New Generators
+
+We welcome contributions! If you have ideas for new handlers or have implemented one yourself, please consider opening an issue on our [GitHub repository](https://github.com/tatarysh/chaff-files) to discuss it, or create a pull request with your changes. Your contributions help make this package more robust and versatile.
 
 To add a new generator for a different sensitive file:
 
