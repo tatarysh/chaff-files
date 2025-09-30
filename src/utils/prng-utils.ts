@@ -1,4 +1,3 @@
-
 // Simple hash function (djb2)
 export const simpleHash = (str: string): number => {
   let hash = 5381;
@@ -31,5 +30,9 @@ export class PRNG {
       result += chars.charAt(this.nextInt(0, chars.length - 1));
     }
     return result;
+  }
+  // Returns a random element from an array
+  nextChoice<T>(choices: T[]): T {
+    return choices[this.nextInt(0, choices.length - 1)];
   }
 }
