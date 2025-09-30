@@ -49,6 +49,25 @@ app.listen(port, () => {
 });
 ```
 
+### In a Nuxt 4 Server Middleware
+
+For Nuxt 4 projects, you can integrate `@rysh/chaff-files` as a server middleware to intercept requests and serve generated chaff content.
+
+```typescript
+import { generateChaffResponse } from '@rysh/chaff-files'
+import { send } from 'h3'
+
+export default eventHandler((event) => {
+  const url = event.node.req.originalUrl || event.node.req.url
+
+  const response = generateChaffResponse(url)
+
+  if (response) {
+    return send(event, response.content, response.type)
+  }
+})
+```
+
 ### Available Generators
 
 The package comes with several built-in generators for common sensitive files:
@@ -62,6 +81,9 @@ The package comes with several built-in generators for common sensitive files:
 -   **`wp-config.php` files**: Matches paths like `/wp-config.php`, `/blog/wp-config.php`.
     *   Generates fake WordPress configuration, including database credentials, authentication keys, and debugging settings.
     *   Boolean settings like `WP_DEBUG` are pseudo-randomly set but deterministic per path.
+-   **Generic `*.php` files**: Matches any `*.php` file path that is not specifically handled by another generator (e.g., `/config.php`, `/api/settings.php`).
+    *   Generates fake PHP configuration with `define()` constants for application name, environment, API keys, and feature flags.
+    *   Values are pseudo-randomly generated but deterministic per path.
 -   **`~/.ssh/id_rsa` files**: Matches paths like `/.ssh/id_rsa`, `/home/user/.ssh/id_rsa`.
     *   Generates fake SSH private keys, including dynamic key content, email, and date.
     *   Values are pseudo-randomly generated but deterministic per path.
@@ -87,7 +109,7 @@ To run the development server and test the generators:
     *   `http://localhost:3000/my-project/.git/config`
     *   `http://localhost:3000/wp-config.php`
     *   `http://localhost:3000/blog/wp-config.php`
-
+    *   `http://localhost:3000/config.php`
 ## Extending with New Generators
 
 We welcome contributions! If you have ideas for new handlers or have implemented one yourself, please consider opening an issue on our [GitHub repository](https://github.com/tatarysh/chaff-files) to discuss it, or create a pull request with your changes. Your contributions help make this package more robust and versatile.
